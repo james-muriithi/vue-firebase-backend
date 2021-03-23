@@ -10,9 +10,11 @@
 
       <p v-if="isLoading">Loading...</p>
       <p v-else-if="!isLoading && error">
-        {{error}}
+        {{ error }}
       </p>
-      <p v-else-if="!isLoading && (!results || results.length === 0)">No experiences found</p>
+      <p v-else-if="!isLoading && (!results || results.length === 0)">
+        No experiences found
+      </p>
       <ul v-else-if="!isLoading && results && results.length > 0">
         <survey-result
           v-for="result in results"
@@ -36,29 +38,30 @@ export default {
     return {
       results: [],
       isLoading: false,
-      error: null
+      error: null,
     };
   },
-  mounted(){
-    this.loadExperiences()
+  mounted() {
+    this.loadExperiences();
   },
   methods: {
     loadExperiences() {
-      this.isLoading = true
+      this.isLoading = true;
       fetch('https://login-d4e7e.firebaseio.com/surveys.json')
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           this.isLoading = false;
-          for(const id in data){
+          for (const id in data) {
             this.results.push({
               id,
               name: data[id].name,
-              rating: data[id].rating
-            })
+              rating: data[id].rating,
+            });
           }
-        }).catch(() => {
-          this.isLoading = false
-          this.error = "Failed to fetch data";
+        })
+        .catch(() => {
+          this.isLoading = false;
+          this.error = 'Failed to fetch data';
         });
     },
   },
