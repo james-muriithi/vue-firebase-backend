@@ -9,6 +9,9 @@
       </div>
 
       <p v-if="isLoading">Loading...</p>
+      <p v-else-if="!isLoading && error">
+        {{error}}
+      </p>
       <p v-else-if="!isLoading && (!results || results.length === 0)">No experiences found</p>
       <ul v-else-if="!isLoading && results && results.length > 0">
         <survey-result
@@ -32,7 +35,8 @@ export default {
   data() {
     return {
       results: [],
-      isLoading: false
+      isLoading: false,
+      error: null
     };
   },
   mounted(){
@@ -52,6 +56,9 @@ export default {
               rating: data[id].rating
             })
           }
+        }).catch(() => {
+          this.isLoading = false
+          this.error = "Failed to fetch data";
         });
     },
   },
