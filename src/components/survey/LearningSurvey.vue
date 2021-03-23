@@ -74,7 +74,7 @@ export default {
         rating: this.chosenRating,
       });
 
-      fetch('https://login-d4e7e.firebaseio.com/surveys.json', {
+      fetch('https://vue-firebase69-default-rtdb.firebaseio.com/surveys.json', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
